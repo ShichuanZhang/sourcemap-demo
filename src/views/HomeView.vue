@@ -48,6 +48,7 @@ function beforeUpload(file: any) {
     js_error.value.stack_frames[stackFrameObj.index].origin = code
     dialogVisible.value = false
   }
+  return false
 }
 
 async function getSource(sourcemap: any, line: number, column: number) {
