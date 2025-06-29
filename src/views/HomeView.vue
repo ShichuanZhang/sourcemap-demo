@@ -22,7 +22,8 @@
         </el-row>
         <el-row :gutter="20">
           <template v-if="item.origin">
-            {{ item.origin }}
+            <!-- {{ item.origin }} -->
+            <PreView :orgin="item.origin"></PreView>
           </template>
           <template v-else>
             {{ item.fileName }}
@@ -54,6 +55,7 @@ const isError = ref<boolean>(false)
 const activeName = ref<string>('')
 const dialogVisible = ref<boolean>(false)
 const tabActiveName = ref<string>('local')
+import PreView from './PreView.vue'
 
 let stackFrameObj = {
   line: 0,
