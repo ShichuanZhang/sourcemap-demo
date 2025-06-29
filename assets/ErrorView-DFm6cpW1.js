@@ -1,0 +1,2 @@
+import{d as a,c as s,a as r,b as o,r as i,o as p}from"./index-C3vJv1Pc.js";const l={class:"about"},g=a({__name:"ErrorView",setup(E){const n=()=>{typeError.length>0&&console.log("!error")},t=()=>{throw new ReferenceError("这是一个ReferenceError")},c=()=>{throw new SyntaxError("这是一个SyntaxError")};return(_,d)=>{const e=i("el-divider");return p(),s("div",l,[r("p",{onClick:n},"触发TypeError"),o(e),r("p",{onClick:t},"触发ReferenceError"),o(e),r("p",{onClick:c},"触发SyntaxError")])}}});export{g as default};
+//# sourceMappingURL=ErrorView-DFm6cpW1.js.map
