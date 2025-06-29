@@ -23,7 +23,7 @@
         <el-row :gutter="20">
           <template v-if="item.origin">
             <!-- {{ item.origin }} -->
-            <PreView :orgin="item.origin"></PreView>
+            <PreView :origin="item.origin"></PreView>
           </template>
           <template v-else>
             {{ item.fileName }}
@@ -107,6 +107,7 @@ async function getSource(sourcemap: any, line: number, column: number) {
       line: line,
       column: column,
     })
+    console.log(originalPosition)
     const source = consumer.sourceContentFor(originalPosition.source)
     return { source, line: originalPosition.line, column: originalPosition.column }
   } catch (e) {
