@@ -1,3 +1,50 @@
+<template>
+  <div v-if="isError">
+    <pre>
+      {{ js_error.stack }}
+    </pre>
+    <el-collapse v-model="activeName" accordion>
+      <el-collapse-item
+        v-for="(item, index) in js_error.stack_frames"
+        :key="index"
+        :title="item.source"
+        :name="index"
+      >
+        <el-row :gutter="20">
+          <el-col :span="20">
+            <div>{{ item.fileName }}</div>
+          </el-col>
+          <el-col :span="4">
+            <el-button type="primary" size="small" @click="openDialog(item, index)">
+              映射源码
+            </el-button>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <template v-if="item.origin">
+            {{ item.origin }}
+          </template>
+          <template v-else>
+            {{ item.fileName }}
+          </template>
+        </el-row>
+      </el-collapse-item>
+    </el-collapse>
+
+    <el-dialog v-model="dialogVisible" title="Tips" width="500">
+      <el-tabs v-model="tabActiveName">
+        <el-tab-pane label="本地上传" name="local">
+          <el-upload drag :before-upload="beforeUpload">
+            <i class="el-icon-upload"></i>
+            <div>将文件拖到此处, 或<em>点击上传</em></div>
+          </el-upload>
+        </el-tab-pane>
+        <el-tab-pane label="远程加载" name="remote"></el-tab-pane>
+      </el-tabs>
+    </el-dialog>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
 import { SourceMapConsumer } from 'source-map-js'
@@ -65,50 +112,3 @@ async function getSource(sourcemap: any, line: number, column: number) {
   }
 }
 </script>
-
-<template>
-  <div v-if="isError">
-    <pre>
-      {{ js_error.stack }}
-    </pre>
-    <el-collapse v-model="activeName" accordion>
-      <el-collapse-item
-        v-for="(item, index) in js_error.stack_frames"
-        :key="index"
-        :title="item.source"
-        :name="index"
-      >
-        <el-row :gutter="20">
-          <el-col :span="20">
-            <div>{{ item.fileName }}</div>
-          </el-col>
-          <el-col :span="4">
-            <el-button type="primary" size="small" @click="openDialog(item, index)">
-              映射源码
-            </el-button>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <template v-if="item.origin">
-            {{ item.origin }}
-          </template>
-          <template v-else>
-            {{ item.fileName }}
-          </template>
-        </el-row>
-      </el-collapse-item>
-    </el-collapse>
-
-    <el-dialog v-model="dialogVisible" title="Tips" width="500">
-      <el-tabs v-model="tabActiveName">
-        <el-tab-pane label="本地上传" name="local">
-          <el-upload drag @before-upload="beforeUpload">
-            <i class="el-icon-upload"></i>
-            <div>将文件拖到此处, 或<em>点击上传</em></div>
-          </el-upload>
-        </el-tab-pane>
-        <el-tab-pane label="远程加载" name="remote"></el-tab-pane>
-      </el-tabs>
-    </el-dialog>
-  </div>
-</template>
